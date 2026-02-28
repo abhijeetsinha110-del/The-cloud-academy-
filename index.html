@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Cloud Academy | Global IT Leader</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #0f172a;
+            --accent: #3b82f6;
+            --accent-glow: rgba(59, 130, 246, 0.5);
+            --text-slate: #64748b;
+            --bg-glass: rgba(255, 255, 255, 0.8);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { background-color: #fdfdfd; color: var(--primary); line-height: 1.6; overflow-x: hidden; }
+
+        /* --- CRYSTAL NAVBAR --- */
+        nav { 
+            background: var(--bg-glass); backdrop-filter: blur(15px);
+            padding: 0.8rem 8%; display: flex; justify-content: space-between; align-items: center; 
+            position: sticky; top: 0; z-index: 2000; border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        .logo { font-weight: 800; font-size: 1.5rem; text-decoration: none; color: var(--primary); display: flex; align-items: center; gap: 10px; }
+        .logo i { color: var(--accent); font-size: 1.8rem; filter: drop-shadow(0 0 8px var(--accent-glow)); }
+        .logo span { color: var(--accent); }
+
+        /* --- BEYOND HERO --- */
+        .hero {
+            padding: 100px 8%; display: flex; align-items: center; justify-content: space-between;
+            background: radial-gradient(circle at 0% 0%, rgba(59,130,246,0.08) 0%, transparent 50%);
+            min-height: 80vh; gap: 50px;
+        }
+        .hero-text { flex: 1; }
+        .hero-text h1 { font-size: clamp(3rem, 6vw, 4.5rem); font-weight: 800; line-height: 1; margin-bottom: 20px; letter-spacing: -2px; }
+        .hero-text h1 span { background: linear-gradient(90deg, #3b82f6, #9333ea); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero-text p { font-size: 1.2rem; color: var(--text-slate); margin-bottom: 40px; max-width: 600px; }
+
+        .btn-group { display: flex; gap: 20px; }
+        .btn { padding: 16px 32px; border-radius: 14px; font-weight: 700; text-decoration: none; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); cursor: pointer; border: none; font-size: 1rem; text-align: center;}
+        .btn-p { background: var(--primary); color: white; box-shadow: 0 20px 40px rgba(15, 23, 42, 0.2); }
+        .btn-p:hover { transform: translateY(-5px); box-shadow: 0 25px 50px rgba(15, 23, 42, 0.3); }
+
+        /* --- GLOBAL STATS GRID --- */
+        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; padding: 0 8%; margin-top: -60px; }
+        .stat-item { background: white; padding: 30px; border-radius: 24px; text-align: center; border: 1px solid #f1f5f9; box-shadow: 0 10px 30px rgba(0,0,0,0.03); transition: 0.3s; }
+        .stat-item i { font-size: 1.5rem; color: var(--accent); margin-bottom: 15px; display: block; }
+        .stat-item h4 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-slate); }
+
+        /* --- PREMIUM COURSE CARDS --- */
+        .section-header { text-align: center; padding: 100px 8% 50px; }
+        .section-header h2 { font-size: 2.8rem; font-weight: 800; letter-spacing: -1px; }
+        
+        .course-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; padding: 0 8%; }
+        .course-card { 
+            background: white; border-radius: 28px; padding: 40px; border: 1px solid #f1f5f9;
+            transition: 0.4s; cursor: pointer; position: relative; overflow: hidden;
+        }
+        .course-card::before { content: ""; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--accent); opacity: 0; transition: 0.3s; }
+        .course-card:hover { transform: scale(1.02); box-shadow: 0 30px 60px rgba(0,0,0,0.06); }
+        .course-card:hover::before { opacity: 1; }
+        .course-card h3 { font-size: 1.4rem; margin-bottom: 10px; font-weight: 700; }
+
+        .details { max-height: 0; overflow: hidden; transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1); opacity: 0; }
+        .course-card.active .details { max-height: 400px; opacity: 1; padding-top: 25px; margin-top: 20px; border-top: 1px solid #f1f5f9; }
+        .details p { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; font-size: 0.95rem; color: #475569; }
+        .details p i { color: #10b981; font-size: 1rem; }
+
+        /* --- INFINITE SLIDER SECTION --- */
+        .slider-wrap { background: var(--primary); padding: 100px 0; margin-top: 100px; }
+        .slider-container { width: 85%; margin: 0 auto; border-radius: 40px; overflow: hidden; background: white; border: 10px solid rgba(255,255,255,0.1); }
+        .slider-track { display: flex; transition: transform 0.8s cubic-bezier(0.85, 0, 0.15, 1); }
+        .slide { min-width: 100%; height: 550px; }
+        .slide img { width: 100%; height: 100%; object-fit: contain; }
+
+        /* --- ENTERPRISE CONTACT FORM --- */
+        .contact-section { padding: 120px 8%; display: flex; gap: 80px; align-items: center; background: white; }
+        .contact-left { flex: 1; }
+        .contact-left h2 { font-size: 3rem; font-weight: 800; line-height: 1.1; margin-bottom: 25px; }
+        .form-box { flex: 1; background: #f8fafc; padding: 50px; border-radius: 35px; }
+        .form-group { margin-bottom: 25px; }
+        .form-group label { display: block; font-weight: 700; font-size: 0.8rem; margin-bottom: 10px; color: var(--text-slate); text-transform: uppercase; }
+        .input-f { width: 100%; padding: 18px; border-radius: 16px; border: 1px solid #e2e8f0; font-size: 1rem; transition: 0.3s; }
+        .input-f:focus { border-color: var(--accent); outline: none; box-shadow: 0 0 0 5px rgba(59, 130, 246, 0.1); background: white; }
+
+        /* --- STICKY DYNAMIC ACTIONS --- */
+        .action-hub { position: fixed; bottom: 30px; right: 30px; display: flex; flex-direction: column; gap: 15px; z-index: 3000; }
+        .hub-btn { width: 65px; height: 65px; border-radius: 22px; display: flex; align-items: center; justify-content: center; color: white; text-decoration: none; font-size: 1.6rem; box-shadow: 0 20px 40px rgba(0,0,0,0.15); transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .hub-wp { background: #22c55e; }
+        .hub-call { background: var(--accent); }
+        .hub-btn:hover { transform: scale(1.15) rotate(-5deg); }
+
+        footer { padding: 80px 8%; background: #020617; color: #94a3b8; text-align: center; }
+
+        @media (max-width: 1024px) {
+            .hero, .contact-section { flex-direction: column; text-align: center; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); margin-top: 0; }
+            .slide { height: 350px; }
+            .contact-left h2 { font-size: 2.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="#" class="logo"><i class="fas fa-cloud-bolt"></i> THE CLOUD <span>ACADEMY</span></a>
+        <a href="mailto:thecloudacademy406@gmail.com" style="color: var(--primary); font-size: 1.4rem;"><i class="fa-regular fa-envelope"></i></a>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-text">
+            <h1>Mastering <span>Cloud Architecture</span> For The Next Decade.</h1>
+            <p>High-intensity, project-based training designed for the engineers of tomorrow. Official training partner for global certifications.</p>
+            <div class="btn-group">
+                <a href="#courses" class="btn btn-p">Browse Courses</a>
+                <button class="btn" style="background: white; border: 1px solid #e2e8f0;" onclick="document.getElementById('tModal').style.display='block'">Join as Instructor</button>
+            </div>
+        </div>
+        <div class="hero-image" style="flex: 0.8;">
+            <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80" style="width: 100%; border-radius: 40px; box-shadow: 0 50px 100px -20px rgba(0,0,0,0.12);" alt="Data Visualization">
+        </div>
+    </section>
+
+    <div class="stats-grid">
+        <div class="stat-item"><i class="fas fa-flag-usa"></i><h4>USA</h4></div>
+        <div class="stat-item"><i class="fas fa-city"></i><h4>DUBAI</h4></div>
+        <div class="stat-item"><i class="fas fa-mosque"></i><h4>QATAR</h4></div>
+        <div class="stat-item"><i class="fas fa-location-dot"></i><h4>INDIA</h4></div>
+    </div>
+
+    <div class="section-header" id="courses">
+        <h2>Strategic Learning Paths</h2>
+        <p style="color: var(--text-slate); margin-top: 10px;">Select a program to view its comprehensive curriculum.</p>
+    </div>
+
+    <div class="course-grid" id="courseGrid"></div>
+
+    <div class="slider-wrap">
+        <div class="section-header" style="color: white;">
+            <h2 style="color: white; margin-bottom: 50px;">Academy Inside-View</h2>
+        </div>
+        <div class="slider-container">
+            <div class="slider-track" id="sliderTrack">
+                <div class="slide"><img src="img1.png" alt="1"></div>
+                <div class="slide"><img src="img2.png" alt="2"></div>
+                <div class="slide"><img src="img3.png" alt="3"></div>
+                <div class="slide"><img src="img4.png" alt="4"></div>
+                <div class="slide"><img src="img5.png" alt="5"></div>
+                <div class="slide"><img src="img6.png" alt="6"></div>
+                <div class="slide"><img src="img7.png" alt="7"></div>
+            </div>
+        </div>
+    </div>
+
+    <section class="contact-section">
+        <div class="contact-left">
+            <h2>Let's build your <br>tech legacy.</h2>
+            <p style="color: var(--text-slate); margin-top: 20px;">Direct counseling with industry experts. Zero-cost orientation sessions available weekly.</p>
+            <div style="margin-top: 50px; background: #eff6ff; padding: 30px; border-radius: 24px; border-left: 5px solid var(--accent);">
+                <p style="font-weight: 800; color: var(--accent);"><i class="fas fa-award"></i> 100% Guaranteed Placement Assistance</p>
+            </div>
+        </div>
+        <div class="form-box">
+            <form id="enquiryForm">
+                <div class="form-group">
+                    <label>Candidate Name</label>
+                    <input type="text" id="name" class="input-f" placeholder="Full Name" required>
+                </div>
+                <div class="form-group">
+                    <label>Preferred Course</label>
+                    <select id="course" class="input-f">
+                        <option>Azure All Course</option><option>AWS All Course</option><option>DevOps</option>
+                        <option>Full Stack Development</option><option>SAP</option><option>Linux</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-p" style="width: 100%; background: #22c55e;">PROCEED TO CONFIRM ADMISSION</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <p style="color: white; font-weight: 800; font-size: 1.2rem; margin-bottom: 20px;">THE CLOUD ACADEMY</p>
+        <p>&copy; 2026 THE CLOUD ACADEMY | Worldwide Corporate IT Training</p>
+    </footer>
+
+    <div class="action-hub">
+        <a href="tel:+919958201323" class="hub-btn hub-call"><i class="fas fa-phone-alt"></i></a>
+        <a href="https://wa.me/919958201323" class="hub-btn hub-wp"><i class="fab fa-whatsapp"></i></a>
+    </div>
+
+    <div id="tModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(2,6,23,0.8); backdrop-filter:blur(8px); z-index:4000;">
+        <div style="background:white; max-width:480px; margin: 100px auto; padding: 50px; border-radius: 35px; position: relative;">
+            <span onclick="this.parentElement.parentElement.style.display='none'" style="position:absolute; right:30px; top:25px; cursor:pointer; font-size: 2rem; color: var(--text-slate);">&times;</span>
+            <h3 style="font-size: 1.8rem; font-weight: 800; margin-bottom: 25px;">Expert Application</h3>
+            <form id="trainerForm">
+                <input type="text" id="tName" placeholder="Your Name" class="input-f" style="margin-bottom:20px;" required>
+                <textarea id="tSkills" placeholder="Briefly describe your expertise..." class="input-f" rows="4" style="margin-bottom:20px;" required></textarea>
+                <button type="submit" class="btn btn-p" style="width: 100%;">SEND APPLICATION</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let idx = 0;
+        const track = document.getElementById('sliderTrack');
+        const slides = document.querySelectorAll('.slide');
+        setInterval(() => {
+            idx = (idx + 1) % slides.length;
+            track.style.transform = `translateX(-${idx * 100}%)`;
+        }, 4500);
+
+        const courses = ["Azure All Course", "AWS All Course", "GCP", "DevOps", "PMP", "Full Stack Development", "Software Testing", "Linux Admin", "CCNA", "CCNP", "SAP", "Digital Marketing"];
+        const grid = document.getElementById('courseGrid');
+        courses.forEach(c => {
+            const card = document.createElement('div');
+            card.className = 'course-card';
+            card.innerHTML = `
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <h3 style="flex:1;">${c}</h3>
+                    <i class="fas fa-plus-circle" style="color:var(--accent); font-size:1.2rem;"></i>
+                </div>
+                <p style="color:var(--text-slate); font-size:0.85rem; margin-top:5px;">Explore Professional Track</p>
+                <div class="details">
+                    <p><i class="fas fa-check-circle"></i> Beginner to Professional Level Training</p>
+                    <p><i class="fas fa-check-circle"></i> 10+ Industry Real-time Projects</p>
+                    <p><i class="fas fa-check-circle"></i> Official Certification Exam Guidance</p>
+                    <p><i class="fas fa-check-circle"></i> Resume Building & Interview Prep</p>
+                    <p><i class="fas fa-check-circle"></i> 100% Guaranteed Placement Support</p>
+                </div>`;
+            card.onclick = () => card.classList.toggle('active');
+            grid.appendChild(card);
+        });
+
+        // REDIRECT TO PAYMENT PAGE
+        document.getElementById('enquiryForm').onsubmit = (e) => {
+            e.preventDefault();
+            window.location.href = "payment.html";
+        };
+
+        document.getElementById('trainerForm').onsubmit = (e) => {
+            e.preventDefault();
+            const n = document.getElementById('tName').value;
+            const s = document.getElementById('tSkills').value;
+            window.open(`https://wa.me/919958201323?text=Trainer Application: ${n}. Skills: ${s}`, '_blank');
+        };
+    </script>
+</body>
+</html>
